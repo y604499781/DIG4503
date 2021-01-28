@@ -2,7 +2,7 @@ const Yi = require("./Yi.js");
 
 let me = new Yi(
   "Name: Yi",
-  "Favorite Color: Blue"
+  "#98ff98"
 );
 
 me.speak();
