@@ -1,3 +1,4 @@
+//throws ESM error, fixed with updating node js version
 import Express from 'express';
 
 const App = Express();
