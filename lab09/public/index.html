@@ -1,0 +1,89 @@
+<html>
+  <body>
+    <script>
+      //search for matching employee with given age & report result
+      function readAge(event) {
+        event.preventDefault();
+        //get input with id "age"
+        let element = document.querySelector("#age");
+        //add input to url(created in index.js) and find matching data in database.json
+        fetch("/api/ages/" + element.value)
+        .then((res) => {
+          return res.json();
+        })
+        //if result=not found display error msg in reporting area
+        //if match found display matching employee name
+        .then((processed) => {
+          let reporting = document.querySelector("#reportingArea");
+          if(processed.error) {
+            reporting.innerHTML = processed.error;
+          } else {
+            reporting.innerHTML = processed.name;
+          }
+        })
+      }
+
+      //search for matching employee with given name & report result
+      function readName(event) {
+      event.preventDefault();
+      //get input with id "name" 
+      let element = document.querySelector("#name");
+      //add input to url(created in index.js) and find matching data in database.json
+      fetch("/api/employees/" + element.value)
+      .then((res) => {
+        return res.json();
+      })
+      //if result=not found display error msg in reporting area
+      //if match found display matching employee name
+      .then((processed) => {
+        let reporting = document.querySelector("#reportingArea");
+        if(processed.error) {
+          reporting.innerHTML = processed.error;
+        } else {
+          reporting.innerHTML = processed.age;
+        }
+      })
+    }
+
+    //adding new employee name and age to database
+    function createEmployee(event) {
+      event.preventDefault();
+      let name = document.querySelector("#personName");
+      let age = document.querySelector("#personAge");
+      //grab added data and print to console/report success
+      fetch("/api/" + name.value + "/" + age.value, {
+        "method": "post"
+      }).then((res) => {
+        return res.json();
+      }).then((processed) => {
+        let reporting = document.querySelector("#reportingArea");
+        console.log(processed);
+        reporting.innerHTML = "New employee added.";
+      });
+    }
+    </script>
+    <h1>Employee Search</h1>
+    <h2>Age</h2>
+    <form onsubmit="readAge(event)">
+      <input id="age" type="text">
+      <button>Submit</button> 
+    </form>
+    <h2>Name</h2>
+    <form onsubmit="readName(event)">
+      <input id="name" type="text">
+      <button>Submit</button> 
+    </form>
+    <hr>
+    <h2>New Employee</h2>
+    <form onsubmit="createEmployee(event)">
+      <label>Name:</label>
+      <input id="personName" type="text">
+      <label>Age:</label>
+      <input id="personAge" type="text"><br><br>
+      <button>Submit</button>
+    </form>
+    <hr>
+    <h2>Reporting Area</h2>
+    <div id="reportingArea"></div>
+  </body>
+</html>
