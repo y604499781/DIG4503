@@ -1,0 +1,9 @@
+input {
+  tab-size: 3;
+}
+
+.add {
+  border-style: dotted dashed solid double;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
